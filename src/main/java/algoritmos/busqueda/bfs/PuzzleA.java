@@ -14,7 +14,7 @@ import java.util.Stack;
 public class PuzzleA {
 
     ArrayList<String> lista = new ArrayList<String>();
-   private String estado_inicial;// = "201475863";
+   private String estado_inicial = "201475863";
    private static String estado_final = "123456780";
    private String estado_actual;
    private String estado_anterior;
@@ -51,27 +51,29 @@ public class PuzzleA {
    
    
    public int getManhattanPriority(String puzzle){
-        String mov;
-       int indice = puzzle.indexOf("0");
+       String ef = "123456780";
+       System.out.println(" length = " + puzzle.length());
+       int index;
+       int value;
+       int pos_val;
+       int manhatan  = 0;
+       for (int i = 0; i < 8; i++) {
+           value = puzzle.charAt(i) - 48;
+           if (value == 0) {
+               index = 8;
+           } else {
+               index = puzzle.indexOf(value + 48) + 1;
+
+           }
+           pos_val = value;
+           manhatan = pos_val - index;
+           if (manhatan < 0) {
+               manhatan *= -1;
+           }
+           manhatan += manhatan;
+       }
        
-       
-       if( indice != 0 && indice != 3 && indice != 6  ){
-            mov = puzzle.substring(0, indice - 1) + "0" + puzzle.charAt(indice-1) + puzzle.substring(indice+1);
-            nodosHijos.add(mov);
-        }
-        if( indice != 2 && indice != 5 && indice != 8){
-            mov = puzzle.substring(0, indice) + puzzle.charAt(indice + 1) + "0"+ puzzle.substring(indice + 2);
-            nodosHijos.add(mov);
-        }
-        if( indice > 2 ){           
-            mov = puzzle.substring(0, indice-3) + puzzle.charAt(indice) + puzzle.substring(indice-2, indice)+ puzzle.charAt(indice-3)+ puzzle.substring(indice +1);
-            nodosHijos.add(mov);    
-        }        
-        if( indice < 6) {
-            mov = puzzle.substring(0, indice )+ puzzle.charAt(indice+3)+ puzzle.substring(indice+1, indice+3)+ puzzle.charAt(indice) + puzzle.substring(indice+4);
-            nodosHijos.add(mov);
-        }    
-       return 1;
+       return manhatan;
        
    }
    
@@ -99,36 +101,42 @@ public class PuzzleA {
        nodosHijos = expandirNodos(estado_inicial);
        Nodo nodo =  new Nodo();
        List<Nodo> listaNodos = new ArrayList<>();
-       for (int i = 0; i < nodosHijos.size(); i++) {
+        for (String nodosHijo : nodosHijos) {
             nodo.distancia =  INF;
             nodo.padre = null;
-            nodo.valor =  nodosHijos.get(i);
+            nodo.valor = nodosHijo;
             listaNodos.add(nodo);
         }
-       
        root.distancia = 0;
        cola.add(root.getValor());
        
        while(!cola.isEmpty()){
            Nodo actual = new Nodo();
            actual.setValor( cola.peek());
-           
-           for (int i = 0; i < listaNodos.size() ; i++) {
-               if( listaNodos.get(i).getDistancia() == INF){
-                   listaNodos.get(i).setDistancia( actual.distancia + 1 );
-                   listaNodos.get(i).setPadre(actual.padre);
-                   cola.remove(listaNodos.get(i).getValor());
+           for (Nodo listaNodo : listaNodos) {
+               if (listaNodo.getDistancia() == INF) {
+                   listaNodo.setDistancia(actual.distancia + 1);
+                   listaNodo.setPadre(actual);
+                   cola.add(listaNodo.getValor());
                }
            }
-              
-              
+           
+           
+           
        }
-               
-        
-        
     }
     
-    
+    public void bfsA(Nodo root){
+        Nodo estado_actual =  new Nodo();
+        root.distancia = 0;
+        root.padre = null;
+        root.valor = estado_inicial;
+        
+        if(estado_final.equals(estado_actual.getValor())){
+            return;
+        }
+    }
+ 
     
     public void imprimir(String v){
         System.out.println(v);
@@ -137,8 +145,9 @@ public class PuzzleA {
             
     public static void main(String[] args) {
        
-        LinkedQueue<String> q = new LinkedQueue<String>();
-        
+       // LinkedQueue<String> q = new LinkedQueue<String>();
+        //Nodo nodo = 
+       //bfs(estado_i)
         
     }
 }

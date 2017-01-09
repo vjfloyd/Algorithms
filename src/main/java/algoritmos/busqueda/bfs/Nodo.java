@@ -10,21 +10,21 @@ package algoritmos.busqueda.bfs;
  * @author vjrojasb
  */
 public class Nodo {
-    public Integer padre;
+    public Nodo padre;
     public Integer distancia;
     public String valor;
 
     public Nodo() {
     }
 
-    public Integer getPadre() {
+    public Nodo getPadre() {
         return padre;
     }
 
-    public void setPadre(Integer padre) {
+    public void setPadre(Nodo padre) {
         this.padre = padre;
     }
-
+    
     public Integer getDistancia() {
         return distancia;
     }
