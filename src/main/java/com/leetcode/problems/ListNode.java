@@ -13,46 +13,62 @@ import algoritmos.busqueda.bfs.Nodo;
  */
 public class ListNode {
     
-    Integer value;
-    ListNode next;
+     int val;
+     ListNode next;
+     ListNode(int x) { 
+       val = x; 
+     }
 
-    public ListNode() {
-      ListNode actual = new ListNode();
-      actual = null;
+    private ListNode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
     
-    ListNode(int x){
-        value = x;
-    }
     
-    public void addNodo(ListNode nuevoNodo){
-       if(estaVacio(this)){
+    public static void addNodo(ListNode head, int value){
+       if(estaVacio(head)){
          ListNode nodoActual = new ListNode(value);
          nodoActual.next = null;
-         
+         head = nodoActual;
        }else{
-          
-         ListNode nuevo = new ListNode();
-         nuevo.next = nuevoNodo;
-         nuevo.value = nuevoNodo.value;
-         
-         nuevoNodo.next = null;
+            ListNode nodoTmp = new ListNode(value);
+           while (head==null) {               
+               head = nodoTmp;
+               head.next = null;
+           }
+           
        }
     }
     
-    public boolean estaVacio(ListNode listNode){
-            while (listNode.next!=null) {
-                return false;
+    
+    
+    public static boolean estaVacio(ListNode listNode){
+        ListNode actual =  null;
+        int cont=0;
+        while (listNode.next!=null) {
+                actual = listNode.next;
+                cont++;
             }
+        if (cont>0) {
+            return false;
+        }
             return true;
     }
     
     public static void main(String[] args) {
-        
-        
+        int valorInicial = 10;
+        ListNode nodoInicial = new ListNode(valorInicial);
+        addNodo(nodoInicial, 10);
+        addNodo(nodoInicial,20);
+        addNodo(nodoInicial,30);
         
     }
 
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode nodoTmp = new ListNode();
+        return nodoTmp;
+    }
    
 }

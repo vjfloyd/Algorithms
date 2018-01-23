@@ -7,7 +7,7 @@ package com.leetcode.problems;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 /**
  *
  * @author vjrojasb
@@ -20,6 +20,7 @@ public class Problems {
     public static void main(String[] args) {
         // TODO code application logic here
         int valor = -2147483648;
+        
         //int valor = -8463847412;
         //System.out.println( "reverse  " + reverse(valor));
         //char[] a = {'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o',' ', 'r', 'l', 'd'};
@@ -28,7 +29,24 @@ public class Problems {
          //System.err.println("->" +recuperarUltimaCadena(""));
          //char[] arreglo = convertirEnArrayLaUltimaCadena("");
          
-         System.out.println( " cadena  " +     CountAndSay(4));
+         //System.out.println( " cadena  " +     CountAndSay(4));
+         System.out.println("max INT value = " + Integer.MAX_VALUE );
+         System.out.println("max INT value = " + Integer.MIN_VALUE );
+         
+         System.out.println("min FLOAT value = " + Float.MIN_VALUE );
+         System.out.println("max FLOAT value = " + Float.MAX_VALUE );
+         
+         System.out.println("min DOUBLE value = " + Double.MIN_VALUE );
+         System.out.println("max DOUBLE value = " + Double.MAX_VALUE );
+         
+         
+         System.out.println("ATOI = " + myAtoi3(" 02 2 1"));
+        
+        String x = "  -0012a42";
+        System.out.println(x.charAt(0));
+        
+        metodoBurbuja();
+         
     }
     // a[ 1 9 10 2 4 ]
     public int[] twoSum(int[] nums, int target) {
@@ -116,9 +134,7 @@ public class Problems {
          }
          return true;
       }
-
-    
-    
+ 
     public static char[] convertirEnCadena(String cadena){
         char[] retorno = cadena.toCharArray();
         return retorno;
@@ -230,9 +246,9 @@ public class Problems {
         return cont==0 ? cont : cont+1;
     }
     
-    class caracterActual{
-        
-    }
+   /**
+    * Casos de prueba " "
+    */
     
      
     public static void ProbandoArregloIntAndInteger(){
@@ -257,7 +273,191 @@ public class Problems {
         }
     }
     
+    // str = " 02 2 1"
+    // str =  "   +0 123"
+    //        "  -0012a42"
+    public static int myAtoi(String str) {
+        char[] numeroArray = str.toCharArray();
+        Double convertedNumber;
+        
+        int indiceArregloDeInt = 0;
+        int contadorDeNulos = 0;
+        int contadorNumeralInvalido = 0;
+        int indicePrimerNumeroSignificativo = 0;
+        boolean primerCaracterNoNuloEncontrado = true;
+        int contadorCaracterNuloEncontrado = 0;
+        char[] arregloInt = new char[str.length()] ;
+        
+        for (int i = 0; i < numeroArray.length; i++) {
+            if(!esCaracterNuloEnBlanco(numeroArray[i])){
+                contadorCaracterNuloEncontrado++;
+                primerCaracterNoNuloEncontrado = true;
+                if(esNumeralInValido(numeroArray[i]))
+                    break;
+                arregloInt[indiceArregloDeInt] =  numeroArray[i];
+                indiceArregloDeInt++;
+            }else{
+                //"nnn2n n2 2"
+                contadorDeNulos++;
+            }
+            if(contadorDeNulos>=0 && indiceArregloDeInt==1)
+                    indicePrimerNumeroSignificativo = indiceArregloDeInt + contadorDeNulos -1;
+               
+            if(ingresoUnCaracterInvalidoEnLaPosicionAceptada(indicePrimerNumeroSignificativo,i,numeroArray[i]))
+                return 0;
+            
+//            if(esNumeralInValido(numeroArray[i]))
+//                break;
+        }
+        
+        /**
+         * Método que completa con Ceros el arregloInt 
+         */        
+        for (int i = 0; i <  contadorDeNulos; i++) {
+            arregloInt[indiceArregloDeInt + i] = ' ';
+        }
+        
+         String arregloEnString  = String.valueOf(arregloInt);
+         arregloEnString = arregloEnString.trim();
+     
+        try {
+            convertedNumber = Double.parseDouble(arregloEnString);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+        
+        if(convertedNumber> Integer.MAX_VALUE )
+            return Integer.MAX_VALUE;
+        else if (convertedNumber < Integer.MIN_VALUE)
+            return Integer.MIN_VALUE;
+        else
+            return Integer.parseInt(arregloEnString);
+            
+//            return convertedNumber;
+//        if(convertedNumber> Integer.MAX_VALUE ||  convertedNumber < Integer.MIN_VALUE)
+//           convertedNumber = convertedNumber > Integer.MAX_VALUE ?  Integer.MAX_VALUE : ( convertedNumber < Integer.MIN_VALUE ? Integer.MIN_VALUE : convertedNumber);
+//        
+//        return new Integer(convertedNumber);
+//        
+   
+
+    }
+    // casos de prueba : " 0 1", " 1 2 9"
+    public static boolean esCaracterNuloEnBlanco(char digito){
+        if(digito == ' '  || digito == '\u0000'){
+            return true;
+        }
+        return false;
+    }
+    
+    //nnn8-
+    public static boolean ingresoUnCaracterInvalidoEnLaPosicionAceptada(int posicionIniciNumSignificativo,int indiceActual, char caracter){
+        if((caracter=='-' || caracter=='+') && indiceActual > posicionIniciNumSignificativo){// 1 = posicionCorreta
+            return true;
+        }
+       return false;
+    }
+    
+    public static boolean esNumeralInValido(char digito){
+       // retorno = true;
+        switch(digito){
+            case '0' :  return false;
+            case '1' : return false;
+            case '2' : return false;
+            case '3': return false;
+            case '4': return false;
+            case '5': return false;
+            case '6': return false;
+            case '7': return false;
+            case '8': return false;
+            case '9': return false;
+            case '-' : return false;
+            case ' ' : return false;
+            case '+' : return false;
+        }
+        return true;
+    }
+ 
     
     
+    public static int myAtoiMachine(String str) {
+	if (str == null || str.length() == 0)
+		return 0;//
+	str = str.trim();
+	char firstChar = str.charAt(0);
+	int sign = 1, start = 0, len = str.length();
+	long sum = 0;
+	if (firstChar == '+') {
+		sign = 1;
+		start++;
+	} else if (firstChar == '-') {
+		sign = -1;
+		start++;
+	}
+	for (int i = start; i < len; i++) {
+		if (!Character.isDigit(str.charAt(i)))
+			return (int) sum * sign;
+		sum = sum * 10 + str.charAt(i) - '0';
+		if (sign == 1 && sum > Integer.MAX_VALUE)
+			return Integer.MAX_VALUE;
+		if (sign == -1 && (-1) * sum < Integer.MIN_VALUE)
+			return Integer.MIN_VALUE;
+	}
+
+	return (int) sum * sign;
+}
     
+    public static int myAtoi3(String str) {
+    int index = 0, sign = 1, total = 0;
+    //1. Empty string
+    if(str.length() == 0) return 0;
+
+    //2. Remove Spaces
+    while(str.charAt(index) == ' ' && index < str.length())
+        index ++;
+
+    //3. Handle signs
+    if(str.charAt(index) == '+' || str.charAt(index) == '-'){
+        sign = str.charAt(index) == '+' ? 1 : -1;
+        index ++;
+    }
+    
+    //4. Convert number and avoid overflow
+    while(index < str.length()){
+        int digit = str.charAt(index) - '0';
+        if(digit < 0 || digit > 9) break;
+
+        //check if total will be overflow after 10 times and add digit
+        if(Integer.MAX_VALUE/10 < total || Integer.MAX_VALUE/10 == total && Integer.MAX_VALUE %10 < digit)
+            return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+
+        total = 10 * total + digit;
+        index ++;
+    }
+    return total * sign;
+}
+
+
+    public static void metodoBurbuja(){
+        int arreglo[] = new int[]{60, 20, 40, 10, 80, 90, 30, 50, 70};
+        int nuevo[] = new int[9];
+        
+        for (int i = 0; i  <  arreglo.length ; i++) {
+            for (int j = i+1; j < arreglo.length; j++) {
+                if(arreglo[i] > arreglo[j] ){
+                    int tmp = arreglo[j];
+                    arreglo[j] = arreglo[i];
+                    arreglo[i] = tmp;
+                }
+            }
+        }
+        
+        for (int i = 0; i < 9; i++) {
+            System.out.print(" , " + arreglo[i]);
+        }
+        
+        
+    }
+    
+
 }

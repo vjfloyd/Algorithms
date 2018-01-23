@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilitarios;
+package fundamentos.exams.questions;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 import java.util.Queue;
 
 /**
@@ -19,6 +21,24 @@ public class Pruebas {
      */
     public static void main(String[] args) {
       
+        List<String> lista = null;
+               
+         if(lista!=null && lista.isEmpty()){
+             System.out.print("hola");
+         }else{
+             System.out.println("ok");
+         }
+         
+        
+        
+        String str1= new String("hola"); 
+        String str2= new String("hola");
+        String str3= "hola";
+        String str4= "hola"; 
+        System.err.println(str1.equals(str2) );
+        System.out.println((str1==str2) + " "); 
+        System.out.println(str3==str4);
+        System.out.println(str3.equals(str4));
         
         Queue<String> cola = new LinkedList<>();
         
@@ -26,6 +46,8 @@ public class Pruebas {
         cola.add("cola2");
         cola.add("cola3");
         
+        Properties prop = new Properties();
+        prop.getProperty("");
         
         for (int i = 0; i < 3; i++) {
             System.out.println( cola.peek());
@@ -59,8 +81,11 @@ public class Pruebas {
         
         System.out.println("manhatan = " +  getManhattanPriority("12")); // 
         
+        if("hola" == "hola"){
+            System.out.println("ok ok");
+        }
         
-        
+        System.out.println("Diff = " +  7.0%2.0); // 
         
     }
     
@@ -71,8 +96,11 @@ public class Pruebas {
        System.out.println(" length = " + val.length());
        int index;
        int value;
-        int pos_val;
-         int manhatan  = 0;
+       int pos_val;
+       int manhatan  = 0;
+         
+        
+         
        for (int i = 0; i < 8; i++) {
            value = val.charAt(i) - 48;
            if (value == 0) {
