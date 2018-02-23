@@ -18,15 +18,10 @@ public class RomanToInteger_13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //romanToInt("CCC");
-        //System.out.println("suma="+romanToInt("CCCXXXIX"));
-        System.out.println("suma="+romanToInt("XVIII"));//XXXIV,IMMMM,MMMCCLXX,CCCXXXIX
-        
+        System.out.println("suma="+romanToInt("D"));//XXXIV,IMMMM,MMMCCLXX,CCCXXXIX,MCMXCVI,CMLII
     }
     public static int romanToInt(String s) {
-        // i = 1  , IV = 4, V = 5, X = 10, L = 50 ,IC = 99, C =100, CCIC = 299,  D = 500, M = 1000 , 3999 = IMMMM
-    
-        Map<String, Integer> tabla = new HashMap<String, Integer>();
+         Map<String, Integer> tabla = new HashMap<String, Integer>();
         tabla.put("I", 1);
         tabla.put("V", 5);
         tabla.put("X", 10);
@@ -34,71 +29,57 @@ public class RomanToInteger_13 {
         tabla.put("C", 100);
         tabla.put("D", 500);
         tabla.put("M", 1000);
-        
         for (Map.Entry<String, Integer> entrySet : tabla.entrySet()) {
             String key = entrySet.getKey();
             Integer value = entrySet.getValue();
-            
         }
         s = s.replaceAll("\\s","");
         String[] arreglo = s.split("");    
-        //Entrada  XXX, XXXIX, IMMMM
-       
-        for (int i = 0; i < arreglo.length; i++) {
-             System.out.println(arreglo[i]);
-        }
-        
-        //Logica
         int tamano = s.length();
         int suma = 0;
-        int resta = 0;
-        String esResta = "";///XIX , CCCXXXIX,XXXIV, IMMM, CMI, MMMCMXCIX
-        
-        for (int i = 0; i < arreglo.length ; i++) {
-            if( i==0 ){
-                suma = tabla.get(arreglo[i]);
-            }
-            if(i <= arreglo.length-2 && arreglo[i].equalsIgnoreCase(arreglo[i+1])){
-               int valor = tabla.get(arreglo[i+1]);
-               suma = valor + suma;
-               if(resta!=0){
-                   suma = suma + tabla.get(arreglo[i]);
-                   resta = 0;
-               }
-               
-            }else{
-                if(i <= arreglo.length-2){
-                    
-                    if(resta != 0){
-                        if( tabla.get(arreglo[i+1]) > resta){
-                            resta = -1*resta;
-                        }
-                        suma = suma + resta + tabla.get(arreglo[i+1]);
-                        resta = 0;
+        int sumando = 0;
+        boolean flagTerminado = false;
+        int tamanioArreglo = arreglo.length;
+        if(tamanioArreglo==1){
+            return tabla.get(arreglo[0]);
+        }
+        for (int i = 0; i < tamanioArreglo ; i++) {
+           if(i+1 < arreglo.length){ 
+               int posterior =  tabla.get(arreglo[i+1]);
+               int anterior = tabla.get(arreglo[i]);//XII
+                if(i >= 1){
+                    if(sumando < posterior){
+                        sumando = -1*sumando;
+                    }else if(sumando >= posterior){
+                        sumando = 1*sumando;
                     }
-                    if(resta!=0 && i+1 == arreglo.length-1){
-                        suma = suma + resta;
-                    }
-                    int nposterior =  tabla.get(arreglo[i+1]);
-                    int nanterior = tabla.get(arreglo[i]);//CCCXXXIX
-                    if(nanterior < nposterior){
-                        resta = -tabla.get(arreglo[i+1]);
-                    }else if(nanterior > nposterior ){
-                         resta = tabla.get(arreglo[i+1]);
-                         if(arreglo.length==2){
-                            suma = suma + resta;
-                            resta = 0;
-                         }
-                         
+                   if(i+1 == tamanioArreglo-1){
+                       suma = suma + sumando + posterior;
+                       flagTerminado = true;
+                    }else{
+                        suma = suma + sumando;
                     }
                 }
-                
+                int base = 0;
+                if(i+1 < tamanioArreglo && !flagTerminado){
+                   if(anterior < posterior){
+                        base = -tabla.get(arreglo[i]);
+                        sumando = tabla.get(arreglo[i+1]);
+                    }else if(anterior >= posterior ){
+                        sumando = tabla.get(arreglo[i+1]);
+                        base = tabla.get(arreglo[i]);
+                    }
+                    if(tamanioArreglo==2 && i==0){
+                      suma = base+ tabla.get(arreglo[i+1]);
+                    }else if(i==0){
+                        suma = base;
+                    }
+                }
             }
         }
-        
-        //Salida
-        
         return suma;
     }
+    
+       
 
 }

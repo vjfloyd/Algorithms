@@ -20,6 +20,8 @@ public class Problems {
     public static void main(String[] args) {
         // TODO code application logic here
         int valor = -2147483648;
+        ListNode lista = new ListNode(1);
+        
         
         //int valor = -8463847412;
         //System.out.println( "reverse  " + reverse(valor));
