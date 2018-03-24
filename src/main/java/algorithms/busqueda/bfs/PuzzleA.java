@@ -1,4 +1,4 @@
-package algoritmos.busqueda.bfs;
+package algorithms.busqueda.bfs;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;

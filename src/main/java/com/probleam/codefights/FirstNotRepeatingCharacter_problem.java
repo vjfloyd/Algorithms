@@ -5,13 +5,6 @@
  */
 package com.probleam.codefights;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
-
 /**
  *
  * @author vjrojasb
@@ -21,64 +14,38 @@ public class FirstNotRepeatingCharacter_problem {
     /**
      * @param args the command line arguments
      */
+    static final int NO_OF_CHARS = 256;
+    static char contador[] = new char[NO_OF_CHARS];
+    
     public static void main(String[] args) {
         // TODO code application logic here
         FirstNotRepeatingCharacter_problem p = new FirstNotRepeatingCharacter_problem();
-        p.firstNotRepeatingCharacter("victor");
+        
+        System.out.println("resultado = " +  p.firstNotRepeatingCharacter("vvviicttoor"));
     }
     
-char  firstNotRepeatingCharacter(String s) {
+    static void getCharCountArray(String str) 
+     {
+         for (int i = 0; i < str.length();  i++){
+             contador[str.charAt(i)]++;
+         }
+     }
     
-    char cadena[] = s.toCharArray();
-    int size = cadena.length;
-    for (int i = 0; i < listArreglo(s).size(); i++) {
-        System.out.println(" " + listArreglo(s).get(i));
-    }           
+                
 //       For s = "aacabadc", the output should be
 //       For s = "accccc", the output should be
 //        firstNotRepeatingCharacter(s) = 'c' s = "abacabaabacaba"
-    boolean continuar = true;
-    int indice_a = 0;
-    int indice = 1;
-    Queue<String> queue = new PriorityQueue<>();
-    List<String> lista = listArreglo(s);
-    Set<String> setlist = new HashSet();
-    boolean exist_some_repetead = false;
-    boolean repetido_una_vez = false;
-    boolean indice_a_repetido = false;
-    while(!exist_some_repetead){
-        if (lista.get(indice_a).equalsIgnoreCase(lista.get(indice))) {
-            indice_a_repetido = true;
-        }else{
-            if(indice_a_repetido)
-                setlist.remove(lista.get(indice_a));
-                
-            setlist.add(lista.get(indice_a));
-            setlist.add(lista.get(indice));
-            
-        }
-        indice++;
-        if(indice == size){
-            if(setlist.size()==1){
-                return setlist.toArray()[0].toString().charAt(0);
+    char  firstNotRepeatingCharacter(String s) {
+        getCharCountArray(s);
+        for (int i = 0; i < NO_OF_CHARS; i++) {
+            if(contador[i] == 1){
+                char retorno = (char)i;
+                System.out.println("holi");
+                return retorno;
             }
-            lista.clear();
-            lista = (List<String>) setlist;
-            indice_a = 0;
-            indice =  indice_a + 1;
-            exist_some_repetead = false;
         }
-    }
-       
-       return '_';
-   }
 
-    List<String> listArreglo(String s){
-        List<String> lista = new ArrayList<>() ;
-        for (int i = 0; i < s.length(); i++) {
-            String dig = String.valueOf(s.charAt(i));
-            lista.add(dig);
-        }
-        return lista;
-    }
+           return '1';
+       }
+
 }

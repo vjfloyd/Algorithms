@@ -1,4 +1,4 @@
-package algoritmos.busqueda.dfs;
+package algorithms.busqueda.dfs;
 
 import java.util.ArrayList;
 import java.util.List;

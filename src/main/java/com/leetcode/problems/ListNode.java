@@ -5,7 +5,7 @@
  */
 package com.leetcode.problems;
 
-import algoritmos.busqueda.bfs.Nodo;
+import algorithms.busqueda.bfs.Nodo;
 
 /**
  *
