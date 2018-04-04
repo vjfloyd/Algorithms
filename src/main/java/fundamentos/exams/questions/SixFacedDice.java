@@ -16,14 +16,20 @@ public class SixFacedDice {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        getPosibilites(10);
     }
     
     
-    public static int getPosibilites(int a) {
+    public static double getPosibilites(int a) {
+       int dado[] = {1,2,3,4,5,6};
+       int sol_1 = 1;
+       int sol_n = 1;
        
-        //
-        
-        return 0;
+        for (int i = 0; i < dado.length; i++) {
+            System.out.println("" + dado[i]);
+        }
+ 
+       return Math.pow(2, a);
     }
     
 }
